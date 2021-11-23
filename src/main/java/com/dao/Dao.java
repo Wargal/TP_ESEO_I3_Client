@@ -5,13 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
 import com.dto.Ville;
+import com.dto.Ville.Coordonnees;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Dao {
@@ -105,10 +110,36 @@ public class Dao {
 			}
 
 			String data = result.toString();
-			System.out.println(data);
+			//System.out.println(data);
 			ObjectMapper objectMapper = new ObjectMapper();
 			list = objectMapper.readerForListOf(Ville.class).readValue(data);
 		}
 		return list;
+	}
+	
+	public static boolean addVille(String code_insee, String nom_commune, String code_postal, String libelle_acheminement,
+			String latitude, String longitude) throws ClientProtocolException, IOException, UnsupportedOperationException {
+		
+		boolean ret = false;
+		// Create an instance of HttpClient.
+		HttpClient httpClient = HttpClients.createDefault();
+
+		Coordonnees coordonnees = new Coordonnees(latitude, longitude);
+		Ville ville = new Ville(code_insee, nom_commune, code_postal, libelle_acheminement,code_insee, coordonnees );
+		// Create a method instance.
+		HttpPost post = new HttpPost("http://localhost:8181/ville");
+		ObjectMapper objectMapper = new ObjectMapper();
+		String JSON_STRING= objectMapper.writeValueAsString(ville);
+	    HttpEntity stringEntity = new StringEntity(JSON_STRING,ContentType.APPLICATION_JSON);
+	    post.setEntity(stringEntity);
+		
+	    HttpResponse response = httpClient.execute(post);
+
+		int internResponseStatus = response.getStatusLine().getStatusCode();
+
+		if (200 == internResponseStatus) {
+			ret=true;
+		}
+		return ret;
 	}
 }

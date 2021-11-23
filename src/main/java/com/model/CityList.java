@@ -50,10 +50,16 @@ public class CityList {
 			out+="<td>"+ville.getLibelle_acheminement()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLatitude()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
+			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
+			out+="<td><button type=\"submit\" action=\"${city.hello}\">"+"OK</button>"+"</td>";
 			out+="</tr>";
 			}
 		}
 		return out;
+	}
+	
+	public void hello() {
+		System.out.println("CAlled");
 	}
 
 }

@@ -1,6 +1,9 @@
 <%@page import="com.model.CityList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+Integer currentPage = (Integer) request.getSession().getAttribute("page");
+%>
 <!doctype html>
 <html lang="en">
 
@@ -447,7 +450,7 @@
 				<div class="row">
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="page-header">
-							<h3 class="mb-2">Sales Dashboard Template</h3>
+							<h3 class="mb-2">TWIC API Client</h3>
 							<p class="pageheader-text">Lorem ipsum dolor sit ametllam
 								fermentum ipsum eu porta consectetur adipiscing elit.Nullam
 								vehicula nulla ut egestas rhoncus.</p>
@@ -509,15 +512,140 @@
 							<div class="card-footer">
 								<div class="toolbar ml-auto">
 									<%
-									for (int i = 0; i < city.getNPages(); i++) {
+									if (currentPage == null) {
+										session.setAttribute("page", 1);
+										currentPage = 1;
+									}
 									%>
-									<a href="#" class="btn btn-primary btn-sm "> <%=i + 1%> 
-									</a>
+									<%
+									for (int i = Math.max(currentPage - 3, 1); i < Math.min(city.getNPages() + 1, currentPage + 3); i++) {
+									%>
+
+									<%
+									if (i == currentPage) {
+									%>
+									<button class="btn btn-primary btn-sm ">
+										<%=i%>
+									</button>
+									<%
+									} else {
+									%>
+									<button class="btn btn-light btn-sm ">
+										<%=i%>
+									</button>
+
+									<%}%>
 									<%}%>
 								</div>
 							</div>
 
 						</div>
+					</div>
+				</div>
+
+				<!-- ============================================================== -->
+				<!-- Add city -->
+				<!-- ============================================================== -->
+				<div class="card">
+					<h5 class="card-header">Ajouter une ville</h5>
+					<div class="card-body">
+						<form method="post">
+							<div class="form-group">
+								<label for="codeCommune" class="col-form-label">Code Commune INSEE</label>
+								<input id="codeCommune" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="nomCommune" class="col-form-label">Nom Commune</label>
+								<input id="nomCommune" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="codePostal" class="col-form-label">Code Postal</label>
+								<input id="codePostal" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="libelle" class="col-form-label">Libelle</label>
+								<input id="libelle" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ligne5" class="col-form-label">Ligne 5</label>
+								<input id="ligne5" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="latitude" class="col-form-label">Latitude</label>
+								<input id="latitude" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="longitude" class="col-form-label">Longitude</label>
+								<input id="longitude" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<input class="btn btn-primary btn-md" type="submit" name="btnAddCity" value="Confirm"/>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<!-- ============================================================== -->
+				<!-- Edit city -->
+				<!-- ============================================================== -->
+				<div class="card">
+					<h5 class="card-header">Modifier une ville</h5>
+					<div class="card-body">
+						<form method="post">
+							<div class="form-group">
+								<label for="codeCommune" class="col-form-label">Code Commune INSEE</label>
+								<input id="codeCommune" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="nomCommune" class="col-form-label">Nom Commune</label>
+								<input id="nomCommune" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="codePostal" class="col-form-label">Code Postal</label>
+								<input id="codePostal" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="libelle" class="col-form-label">Libelle</label>
+								<input id="libelle" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="ligne5" class="col-form-label">Ligne 5</label>
+								<input id="ligne5" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="latitude" class="col-form-label">Latitude</label>
+								<input id="latitude" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="longitude" class="col-form-label">Longitude</label>
+								<input id="longitude" type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<input class="btn btn-primary btn-md" type="submit" name="btnEditCity" value="Confirm"/>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<!-- ============================================================== -->
+				<!-- Delete city -->
+				<!-- ============================================================== -->
+				<div class="card">
+					<h5 class="card-header">Supprimer une ville</h5>
+					<div class="card-body">
+						<form>
+							<div class="form-group">
+								<label for="codeCommune" class="col-form-label">Code Commune INSEE</label>
+								<select id="codeCommune" class="form-control">
+								<%for (int i = 0; i < city.getCities().size(); i++) { %>
+								<option><%= city.getCities().get(i).getCode_commune_INSEE()+" "+city.getCities().get(i).getNom_commune()%></option>
+								<%} %>
+								</select>
+							</div>
+							<div class="form-group">
+								<input class="btn btn-primary btn-md" type="submit" name="btnDeleteCity" value="Confirm"/>
+							</div>
+						</form>
 					</div>
 				</div>
 				<!-- ============================================================== -->
