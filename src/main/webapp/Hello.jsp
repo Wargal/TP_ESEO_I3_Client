@@ -3,6 +3,10 @@
 	pageEncoding="ISO-8859-1"%>
 <%
 Integer currentPage = (Integer) request.getSession().getAttribute("page");
+if (currentPage == null) {
+	session.setAttribute("page", 1);
+	currentPage = 1;
+}
 %>
 <!doctype html>
 <html lang="en">
@@ -481,7 +485,7 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 						<div class="card">
 							<div class="card-header d-flex">
 								<h4 class="card-header-title">Villes de France</h4>
-								<div class="toolbar ml-auto">
+								<div class="toolbar ml-auto" style="display:none">
 									<a href="#" class="btn btn-primary btn-sm "> <i
 										class="fas fa-sync-alt"></i>
 									</a>
@@ -502,7 +506,7 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 										</thead>
 										<tbody>
 
-											<%=city.echoCities(1)%>
+											<%=city.echoCities(currentPage)%>
 										</tbody>
 									</table>
 
@@ -510,12 +514,8 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 							</div>
 							<div class="card-footer">
 								<div class="toolbar ml-auto">
-									<%
-									if (currentPage == null) {
-										session.setAttribute("page", 1);
-										currentPage = 1;
-									}
-									%>
+
+									<form method="post">
 									<%
 									for (int i = Math.max(currentPage - 3, 1); i < Math.min(city.getNPages() + 1, currentPage + 3); i++) {
 									%>
@@ -523,18 +523,16 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 									<%
 									if (i == currentPage) {
 									%>
-									<button class="btn btn-primary btn-sm ">
-										<%=i%>
-									</button>
+									<input type="submit" class="btn btn-primary btn-sm " name ="changePage" value="<%=i%>"/>
 									<%
 									} else {
 									%>
-									<button class="btn btn-light btn-sm ">
-										<%=i%>
-									</button>
+									<input type="submit" class="btn btn-light btn-sm " name ="changePage" value="<%=i%>"/>
+
 
 									<%}%>
 									<%}%>
+									</form>
 								</div>
 							</div>
 
@@ -659,6 +657,48 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 							<div class="form-group">
 								<input class="btn btn-primary btn-md" type="submit"
 									name="btnDeleteCity" value="Confirm" />
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- ============================================================== -->
+				<!-- Distance calculator -->
+				<!-- ============================================================== -->
+				<div class="card">
+					<h5 class="card-header">Distance entre 2 villes</h5>
+					<div class="card-body">
+						<form method="post">
+							<div class="form-group">
+								<label for="coord1" class="col-form-label">Départ</label> <select id="codeCommune" name="coord1" class="form-control">
+									<%
+									for (int i = 0; i < city.getCities().size(); i++) {
+									%>
+									<option value="<%=city.getCities().get(i).getCoordonnees().getLatitude()+"/"+city.getCities().get(i).getCoordonnees().getLongitude()+"/"+city.getCities().get(i).getNom_commune()%>"><%=city.getCities().get(i).getCode_commune_INSEE() + " " + city.getCities().get(i).getNom_commune()%></option>
+									<%
+									}
+									%>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="coord2" class="col-form-label">Destination</label> <select id="codeCommune" name="coord2" class="form-control">
+									<%
+									for (int i = 0; i < city.getCities().size(); i++) {
+									%>
+									<option value="<%=city.getCities().get(i).getCoordonnees().getLatitude()+"/"+city.getCities().get(i).getCoordonnees().getLongitude()+"/"+city.getCities().get(i).getNom_commune()%>"><%=city.getCities().get(i).getCode_commune_INSEE() + " " + city.getCities().get(i).getNom_commune()%></option>
+									<%
+									}
+									%>
+								</select>
+							</div>
+							<div class="form-group">
+								  <fieldset>
+								      <legend>Distance:</legend>
+								  <p><%="La distance entre "+session.getAttribute("depart")+" et "+session.getAttribute("arrivee")+" est de "+session.getAttribute("distance")+" metres" %></p>
+								  </fieldset>
+							</div>
+							<div class="form-group">
+								<input class="btn btn-primary btn-md" type="submit"
+									name="btnDistanceCity" value="Confirm" />
 							</div>
 						</form>
 					</div>

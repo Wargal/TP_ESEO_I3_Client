@@ -40,7 +40,7 @@ public class CityList {
 	
 	public String echoCities(int page) {
 		String out="";
-		for (int i = (page-1)*25; i < (page-1)*25+25; i++) {
+		for (int i = (page-1)*50; i < (page-1)*50+50; i++) {
 			if(i<cities.size()) {
 			Ville ville=cities.get(i);
 			out+="<tr>";
@@ -51,7 +51,6 @@ public class CityList {
 			out+="<td>"+ville.getCoordonnees().getLatitude()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
-			out+="<td><button type=\"submit\" action=\"${city.hello}\">"+"OK</button>"+"</td>";
 			out+="</tr>";
 			}
 		}
