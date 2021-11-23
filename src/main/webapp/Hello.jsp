@@ -14,17 +14,16 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="./assets/vendor/bootstrap/css/bootstrap.min.css">
-<link href="./assets/vendor/fonts/circular-std/style.css"
+<link rel="stylesheet" type="text/css" href="./assets/vendor/bootstrap/css/bootstrap.min.css">
+<link href="./assets/vendor/fonts/circular-std/style.css" type="text/css"
 	rel="stylesheet">
-<link rel="stylesheet" href="./assets/libs/css/style.css">
-<link rel="stylesheet"
+<link rel="stylesheet" type="text/css" href="./assets/libs/css/style.css">
+<link rel="stylesheet" type="text/css"
 	href="./assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-<link rel="stylesheet" href="./assets/vendor/vector-map/jqvmap.css">
-<link rel="stylesheet"
+<link rel="stylesheet" type="text/css" href="./assets/vendor/vector-map/jqvmap.css">
+<link rel="stylesheet" type="text/css"
 	href="./assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css">
-<link rel="stylesheet"
+<link rel="stylesheet" type="text/css"
 	href="./assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
 <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
 </head>
@@ -551,40 +550,42 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 					<div class="card-body">
 						<form method="post">
 							<div class="form-group">
-								<label for="codeCommune" class="col-form-label">Code Commune INSEE</label>
-								<input id="codeCommune" type="text" class="form-control">
+								<label for="codeCommune" class="col-form-label">Code
+									Commune INSEE</label> <input name="codeCommune" id="codeCommune" type="text"
+									class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="nomCommune" class="col-form-label">Nom Commune</label>
-								<input id="nomCommune" type="text" class="form-control">
+								<label for="nomCommune" class="col-form-label">Nom
+									Commune</label> <input name="nomCommune" id="nomCommune" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="codePostal" class="col-form-label">Code Postal</label>
-								<input id="codePostal" type="text" class="form-control">
+								<label for="codePostal" class="col-form-label">Code
+									Postal</label> <input name="codePostal" id="codePostal" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="libelle" class="col-form-label">Libelle</label>
-								<input id="libelle" type="text" class="form-control">
+								<label for="libelle" class="col-form-label">Libelle</label> <input
+									id="libelle" name="libelle" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="ligne5" class="col-form-label">Ligne 5</label>
-								<input id="ligne5" type="text" class="form-control">
+								<label for="ligne5" class="col-form-label">Ligne 5</label> <input
+									id="ligne5" name="ligne5" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="latitude" class="col-form-label">Latitude</label>
-								<input id="latitude" type="text" class="form-control">
+								<label for="latitude" class="col-form-label">Latitude</label> <input
+									id="latitude" name="latitude" type="text" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="longitude" class="col-form-label">Longitude</label>
-								<input id="longitude" type="text" class="form-control">
+								<input name="longitude" id="longitude" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<input class="btn btn-primary btn-md" type="submit" name="btnAddCity" value="Confirm"/>
+								<input class="btn btn-primary btn-md" type="submit"
+									name="btnAddCity" value="Confirm" />
 							</div>
 						</form>
 					</div>
 				</div>
-				
+
 				<!-- ============================================================== -->
 				<!-- Edit city -->
 				<!-- ============================================================== -->
@@ -593,57 +594,71 @@ Integer currentPage = (Integer) request.getSession().getAttribute("page");
 					<div class="card-body">
 						<form method="post">
 							<div class="form-group">
-								<label for="codeCommune" class="col-form-label">Code Commune INSEE</label>
-								<input id="codeCommune" type="text" class="form-control">
+								<label for="codeCommune" class="col-form-label">Code
+									Commune INSEE</label> <select id="codeCommune" name="codeCommune" class="form-control">
+									<%
+									for (int i = 0; i < city.getCities().size(); i++) {
+									%>
+									<option value="<%=city.getCities().get(i).getCode_commune_INSEE()%>"><%=city.getCities().get(i).getCode_commune_INSEE() + " " + city.getCities().get(i).getNom_commune()%></option>
+									<%
+									}
+									%>
+								</select>
 							</div>
 							<div class="form-group">
-								<label for="nomCommune" class="col-form-label">Nom Commune</label>
-								<input id="nomCommune" type="text" class="form-control">
+								<label for="nomCommune" class="col-form-label">Nom
+									Commune</label> <input id="nomCommune" name="nomCommune" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="codePostal" class="col-form-label">Code Postal</label>
-								<input id="codePostal" type="text" class="form-control">
+								<label for="codePostal" class="col-form-label">Code
+									Postal</label> <input id="codePostal" name="codePostal" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="libelle" class="col-form-label">Libelle</label>
-								<input id="libelle" type="text" class="form-control">
+								<label for="libelle" class="col-form-label">Libelle</label> <input
+									id="libelle" name="libelle" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="ligne5" class="col-form-label">Ligne 5</label>
-								<input id="ligne5" type="text" class="form-control">
+								<label for="ligne5" class="col-form-label">Ligne 5</label> <input
+									id="ligne5" name="ligne5" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="latitude" class="col-form-label">Latitude</label>
-								<input id="latitude" type="text" class="form-control">
+								<label for="latitude" class="col-form-label">Latitude</label> <input
+									id="latitude" name="latitude" type="text" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="longitude" class="col-form-label">Longitude</label>
-								<input id="longitude" type="text" class="form-control">
+								<input id="longitude" name="longitude" type="text" class="form-control">
 							</div>
 							<div class="form-group">
-								<input class="btn btn-primary btn-md" type="submit" name="btnEditCity" value="Confirm"/>
+								<input class="btn btn-primary btn-md" type="submit"
+									name="btnEditCity" value="Confirm" />
 							</div>
 						</form>
 					</div>
 				</div>
-				
+
 				<!-- ============================================================== -->
 				<!-- Delete city -->
 				<!-- ============================================================== -->
 				<div class="card">
 					<h5 class="card-header">Supprimer une ville</h5>
 					<div class="card-body">
-						<form>
+						<form method="post">
 							<div class="form-group">
-								<label for="codeCommune" class="col-form-label">Code Commune INSEE</label>
-								<select id="codeCommune" class="form-control">
-								<%for (int i = 0; i < city.getCities().size(); i++) { %>
-								<option><%= city.getCities().get(i).getCode_commune_INSEE()+" "+city.getCities().get(i).getNom_commune()%></option>
-								<%} %>
+								<label for="codeCommune" class="col-form-label">Code
+									Commune INSEE</label> <select id="codeCommune" name="codeCommune" class="form-control">
+									<%
+									for (int i = 0; i < city.getCities().size(); i++) {
+									%>
+									<option value="<%=city.getCities().get(i).getCode_commune_INSEE()%>"><%=city.getCities().get(i).getCode_commune_INSEE() + " " + city.getCities().get(i).getNom_commune()%></option>
+									<%
+									}
+									%>
 								</select>
 							</div>
 							<div class="form-group">
-								<input class="btn btn-primary btn-md" type="submit" name="btnDeleteCity" value="Confirm"/>
+								<input class="btn btn-primary btn-md" type="submit"
+									name="btnDeleteCity" value="Confirm" />
 							</div>
 						</form>
 					</div>

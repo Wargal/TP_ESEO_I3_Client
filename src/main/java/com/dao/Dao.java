@@ -9,8 +9,10 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
@@ -117,7 +119,7 @@ public class Dao {
 		return list;
 	}
 	
-	public static boolean addVille(String code_insee, String nom_commune, String code_postal, String libelle_acheminement,
+	public static boolean addVille(String code_insee, String nom_commune, String code_postal, String libelle_acheminement, String ligne5,
 			String latitude, String longitude) throws ClientProtocolException, IOException, UnsupportedOperationException {
 		
 		boolean ret = false;
@@ -125,15 +127,61 @@ public class Dao {
 		HttpClient httpClient = HttpClients.createDefault();
 
 		Coordonnees coordonnees = new Coordonnees(latitude, longitude);
-		Ville ville = new Ville(code_insee, nom_commune, code_postal, libelle_acheminement,code_insee, coordonnees );
+		Ville ville = new Ville(code_insee, nom_commune, code_postal, libelle_acheminement,ligne5, coordonnees );
 		// Create a method instance.
 		HttpPost post = new HttpPost("http://localhost:8181/ville");
 		ObjectMapper objectMapper = new ObjectMapper();
 		String JSON_STRING= objectMapper.writeValueAsString(ville);
+		System.out.println(JSON_STRING);
 	    HttpEntity stringEntity = new StringEntity(JSON_STRING,ContentType.APPLICATION_JSON);
 	    post.setEntity(stringEntity);
 		
 	    HttpResponse response = httpClient.execute(post);
+
+		int internResponseStatus = response.getStatusLine().getStatusCode();
+
+		if (200 == internResponseStatus) {
+			ret=true;
+		}
+		return ret;
+	}
+	
+	public static boolean editVille(String code_insee, String nom_commune, String code_postal, String libelle_acheminement, String ligne5,
+			String latitude, String longitude) throws ClientProtocolException, IOException, UnsupportedOperationException {
+		
+		boolean ret = false;
+		// Create an instance of HttpClient.
+		HttpClient httpClient = HttpClients.createDefault();
+
+		Coordonnees coordonnees = new Coordonnees(latitude, longitude);
+		Ville ville = new Ville(code_insee, nom_commune, code_postal, libelle_acheminement,ligne5, coordonnees );
+		// Create a method instance.
+		HttpPut post = new HttpPut("http://localhost:8181/ville");
+		ObjectMapper objectMapper = new ObjectMapper();
+		String JSON_STRING= objectMapper.writeValueAsString(ville);
+		System.out.println(JSON_STRING);
+	    HttpEntity stringEntity = new StringEntity(JSON_STRING,ContentType.APPLICATION_JSON);
+	    post.setEntity(stringEntity);
+		
+	    HttpResponse response = httpClient.execute(post);
+
+		int internResponseStatus = response.getStatusLine().getStatusCode();
+
+		if (200 == internResponseStatus) {
+			ret=true;
+		}
+		return ret;
+	}
+	
+	public static boolean deleteVille(String code_insee) throws ClientProtocolException, IOException, UnsupportedOperationException {
+		
+		boolean ret = false;
+		// Create an instance of HttpClient.
+		HttpClient httpClient = HttpClients.createDefault();
+		// Create a method instance.
+		HttpDelete delete = new HttpDelete("http://localhost:8181/ville/"+code_insee);
+		
+	    HttpResponse response = httpClient.execute(delete);
 
 		int internResponseStatus = response.getStatusLine().getStatusCode();
 
