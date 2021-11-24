@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.dao.Dao;
 import com.dto.Ville;
 import com.dto.Ville.Coordonnees;
+import com.model.CityList;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -42,7 +43,11 @@ public class villeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-        this.getServletContext().getRequestDispatcher("/Hello.jsp").forward(request, response);
+		if(request.getParameter("cityDataUpdate")!=null) {
+			response.getWriter().append((new CityList()).echoCities(Integer.valueOf(request.getParameter("cityDataUpdate"))));
+		}else {
+			this.getServletContext().getRequestDispatcher("/Hello.jsp").forward(request, response);
+		}
 	}
 
 	/**

@@ -29,6 +29,50 @@ if (currentPage == null) {
 	href="./assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css">
 <link rel="stylesheet" type="text/css"
 	href="./assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    	function refresh(page){
+    		$.ajax({
+                type: "get",
+                data: { 
+                    "cityDataUpdate": page
+                },
+                url: "ville", //this is my servlet
+                success: function(msg){
+                	var rows = msg.split("</tr>");
+                	//console.log(rows);
+                	document.getElementById("cities_body").innerHTML="";
+                	rows.forEach(function(row){
+                    	document.getElementById("cities_body").insertAdjacentHTML('beforeend', row+"</tr>");
+						//console.log(row+"</tr>");
+                		});
+                }
+            });
+    		var button = '';
+        	document.getElementById("page_changer_selector").innerHTML="";
+
+			for (let i = Math.max(page - 3, 1); i < page + 3; i++) {
+				if (i == page) {
+					button = '<button class="btn btn-primary btn-sm " onclick="refresh('+i+')" name ="changePage">'+i+'</button>';
+	
+				} else {
+	
+					button = '<button class="btn btn-light btn-sm " onclick="refresh('+i+')" name ="changePage">'+i+'</button>';
+				}
+	        	document.getElementById("page_changer_selector").insertAdjacentHTML('beforeend', button);
+
+			}
+
+
+    	}
+        $(document).ready(function() {
+            $('#refresh_cities').click(function ()
+            {
+            	refresh(1);
+            });
+
+        });
+    </script>
 <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
 </head>
 
@@ -485,10 +529,10 @@ if (currentPage == null) {
 						<div class="card">
 							<div class="card-header d-flex">
 								<h4 class="card-header-title">Villes de France</h4>
-								<div class="toolbar ml-auto" style="display:none">
-									<a href="#" class="btn btn-primary btn-sm "> <i
+								<div class="toolbar ml-auto" >
+									<button id="refresh_cities" class="btn btn-primary btn-sm "> <i
 										class="fas fa-sync-alt"></i>
-									</a>
+									</button>
 								</div>
 							</div>
 							<div class="card-body p-0">
@@ -502,9 +546,11 @@ if (currentPage == null) {
 												<th class="border-0">Libelle</th>
 												<th class="border-0">Latitude</th>
 												<th class="border-0">Longitude</th>
+												<th class="border-0">Ligne 5</th>
+												
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="cities_body">
 
 											<%=city.echoCities(currentPage)%>
 										</tbody>
@@ -513,9 +559,7 @@ if (currentPage == null) {
 								</div>
 							</div>
 							<div class="card-footer">
-								<div class="toolbar ml-auto">
-
-									<form method="post">
+								<div class="toolbar ml-auto" id="page_changer_selector">
 									<%
 									for (int i = Math.max(currentPage - 3, 1); i < Math.min(city.getNPages() + 1, currentPage + 3); i++) {
 									%>
@@ -523,16 +567,15 @@ if (currentPage == null) {
 									<%
 									if (i == currentPage) {
 									%>
-									<input type="submit" class="btn btn-primary btn-sm " name ="changePage" value="<%=i%>"/>
+									<button class="btn btn-primary btn-sm " onclick="refresh(<%=i%>)" name ="changePage"><%=i%></button>
 									<%
 									} else {
 									%>
-									<input type="submit" class="btn btn-light btn-sm " name ="changePage" value="<%=i%>"/>
+									<button class="btn btn-light btn-sm " onclick="refresh(<%=i%>)" name ="changePage"><%=i%></button>
 
 
 									<%}%>
 									<%}%>
-									</form>
 								</div>
 							</div>
 

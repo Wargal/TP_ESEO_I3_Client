@@ -50,7 +50,7 @@ public class CityList {
 			out+="<td>"+ville.getLibelle_acheminement()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLatitude()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
-			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
+			out+="<td>"+ville.getLigne_5()+"</td>";
 			out+="</tr>";
 			}
 		}
