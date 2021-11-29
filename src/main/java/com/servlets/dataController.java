@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class villeController
  */
-@WebServlet("/car")
+@WebServlet("/weather")
 public class dataController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

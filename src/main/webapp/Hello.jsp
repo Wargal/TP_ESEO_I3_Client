@@ -31,6 +31,10 @@ if (currentPage == null) {
 	href="./assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript">
+    function goWeather(lat,lng){
+    	//alert("lat : "+lat+"\nlen : "+len);
+    	window.location.href="weather?lat="+lat+"&lng="+lng;
+    }
     	function refresh(page){
     		$.ajax({
                 type: "get",
@@ -547,6 +551,8 @@ if (currentPage == null) {
 												<th class="border-0">Latitude</th>
 												<th class="border-0">Longitude</th>
 												<th class="border-0">Ligne 5</th>
+												<th class="border-0">Meteo</th>
+												
 												
 											</tr>
 										</thead>

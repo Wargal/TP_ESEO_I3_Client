@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WeatherGet {
 private Weather weather;
+private String html;
 
 public WeatherGet(String lat, String lon) throws ClientProtocolException, IOException {
 	// Create an instance of HttpClient.
@@ -49,11 +50,24 @@ public WeatherGet(String lat, String lon) throws ClientProtocolException, IOExce
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				String data = result.toString();
+				this.html=data;
+
 				//System.out.println(data);
-				ObjectMapper objectMapper = new ObjectMapper();
-				weather = objectMapper.readerFor(Weather.class).readValue(data);
+				//ObjectMapper objectMapper = new ObjectMapper();
+				//setWeather(objectMapper.readerFor(Weather.class).readValue(data));
 			}
+}
+
+public Weather getWeather() {
+	return weather;
+}
+
+public String getWeatherHTML() {
+	return html;
+}
+
+public void setWeather(Weather weather) {
+	this.weather = weather;
 }
 }

@@ -51,6 +51,7 @@ public class CityList {
 			out+="<td>"+ville.getCoordonnees().getLatitude()+"</td>";
 			out+="<td>"+ville.getCoordonnees().getLongitude()+"</td>";
 			out+="<td>"+ville.getLigne_5()+"</td>";
+			out+="<td>"+"<button class=\"btn btn-primary btn-sm\" onclick=\"goWeather("+ville.getCoordonnees().getLatitude()+","+ville.getCoordonnees().getLongitude()+");\">"+"<i class=\"fas fa-cloud\"></i>"+"</button>"+"</td>";
 			out+="</tr>";
 			}
 		}
@@ -58,7 +59,7 @@ public class CityList {
 	}
 	
 	public void hello() {
-		System.out.println("CAlled");
+		System.out.println("Called");
 	}
 
 }

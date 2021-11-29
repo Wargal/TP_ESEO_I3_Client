@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
 
 import com.dto.Ville;
 import com.dto.Ville.Coordonnees;
@@ -112,6 +113,11 @@ public class Dao {
 			}
 
 			String data = result.toString();
+			
+		    JSONObject  jsonObject=new JSONObject("{ \"res\":"+data+"}");
+		    System.out.println( "========================== JSON =================");
+
+		    System.out.println( jsonObject.toString());
 			//System.out.println(data);
 			ObjectMapper objectMapper = new ObjectMapper();
 			list = objectMapper.readerForListOf(Ville.class).readValue(data);

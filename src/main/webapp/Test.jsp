@@ -1,28 +1,14 @@
-<%@page import="com.model.CityList"%>
+<%@page import="com.model.WeatherGet"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<html>
-<head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#call').click(function ()
-            {
-                $.ajax({
-                    type: "get",
-                    url: "data", //this is my servlet
-                    success: function(msg){      
-                            $('#output').append(msg);
-                    }
-                });
-            });
+<%
+String lat = "0";
+String lng = "0";
 
-        });
-    </script>
-</head>
-<body>
-<p>Hello Test</p>
-<button id="call"></button>
-<div id="output"></div>
-</body>
-</html>
+if(request.getParameter("lat")!=null && request.getParameter("lng")!=null){
+	lat=request.getParameter("lat");
+	lng=request.getParameter("lng");
+}
+WeatherGet weather = new WeatherGet(lat,lng);
+%>
+<%=weather.getWeatherHTML()%>
